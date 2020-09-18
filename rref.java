@@ -2,12 +2,11 @@ import java.util.*;
 public class rref {
     public static void main(String[] args) {
         float[][] matrix;
-        // if (args.length != 2) {
-        //     System.exit(0);
-        // }
+        if (args.length != 2) {
+            System.exit(0);
+        }
 
-        //matrix = new float[Integer.parseInt(args[0])][Integer.parseInt(args[1])];
-        matrix = new float[2][3];
+        matrix = new float[Integer.parseInt(args[0])][Integer.parseInt(args[1])];
         enterMatrix(matrix);
         printArray(matrix);
         System.out.println();
