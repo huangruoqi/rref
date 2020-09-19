@@ -30,15 +30,16 @@ public class rref {
         int row = m.length;
         int column = m[0].length;
         int maxPivot = Math.min(row,column);
-        for (int i = 0;i<maxPivot;i++) {
-            if (checkPivot(m,i)) {
-                elimination(m,i);
+        for (int r = 0, c = 0;c<maxPivot&&r<maxPivot;r++,c++) {
+            if (checkPivot(m,c)) {
+                elimination(m,r,c);
+            } 
+            else {
+                r--;
             }
         }
-        for (int i = maxPivot-1;i>=0;i--) {
-            if (checkPivot(m,i)) {
-                backwardElimination(m,i);
-            }
+        for (int r = maxPivot-1;r>=0;r--) {
+            backwardElimination(m,r);
         }
         for (int i = 0;i<row;i++) {
             for (int j = 0;j<column;j++) {
@@ -65,36 +66,47 @@ public class rref {
         return false;
     }
 
-    public static void elimination(float[][] m, int n) {
+    public static void elimination(float[][] m, int r, int c) {
         int row = m.length;
         int column = m[0].length;
-        float factor = m[n][n];
+        float factor = m[r][c];
         for (int i = 0;i<column;i++) {
-            m[n][i]/=factor;
+            m[r][i]/=factor;
         }
 
-        for (int i = n+1;i<row;i++) {
-            factor = m[i][n];
+        for (int i = r+1;i<row;i++) {
+            factor = m[i][c];
             for (int j = 0;j<column;j++) {
-                m[i][j] -= (m[n][j]*factor);
+                m[i][j] -= (m[r][j]*factor);
             }
         }
     }
 
-    public static void backwardElimination(float[][] m, int n) {
+    public static boolean backwardElimination(float[][] m, int r) {
         int row = m.length;
         int column = m[0].length;
-        float factor = m[n][n];
+        int c = -1;
+        for (int i=0;i<column;i++) {
+            if (m[r][i]!=0) {
+                c = i; 
+                break;      
+            } 
+        }
+        if (c==-1) {
+            return false;
+        }
+        float factor = m[r][c];
         for (int i = 0;i<column;i++) {
-            m[n][i]/=factor;
+            m[r][i]/=factor;
         }
 
-        for (int i = n-1;i>=0;i--) {
-            factor = m[i][n];
+        for (int i = r-1;i>=0;i--) {
+            factor = m[i][c];
             for (int j = 0;j<column;j++) {
-                m[i][j] -= (m[n][j]*factor);
+                m[i][j] -= (m[r][j]*factor);
             }
         }
+        return true;
     }
 
     public static void printArray(float[][] m) {
