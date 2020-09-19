@@ -112,14 +112,12 @@ public class rref {
     public static void printArray(float[][] m) {
         int row = m.length;
         int column = m[0].length;
-        
         for (int i = 0;i<row;i++) {
-            System.out.print("|\t");
+            System.out.print("|");
             for (int j = 0;j<column;j++) {
-                if (j!=0) System.out.print("\t"); 
-                System.out.printf("%f", m[i][j]);
+                System.out.printf("%9.2f", m[i][j]);
             }
-            System.out.println("\t|");
+            System.out.println("     |");
         }
     }
 
